@@ -14,9 +14,9 @@ final readonly class Run
     {
     }
 
-    public function run(): void
+    public function run(): null
     {
-        echo $this->calculate->calculate();
+        return $this->calculate->calculate();
     }
 
 }

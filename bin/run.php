@@ -15,6 +15,7 @@ require 'src/rules/IsStrike.php';
 require 'src/rules/IsSpare.php';
 require 'src/rules/IsAboveLast.php';
 require 'src/rules/IsStrikeDouble.php';
+require 'src/rules/IsStrikeDoubleAndBeforeLast.php';
 
 
 
@@ -28,7 +29,8 @@ $ruleStrike = new rules\IsStrike();
 $ruleSpare = new rules\IsSpare();
 $ruleLast = new rules\IsAboveLast();
 $ruleStrikeDouble = new rules\IsStrikeDouble();
-$result = new \result\Calculate($frames, $ruleStrike, $ruleSpare, $ruleLast, $ruleStrikeDouble);
+$ruleStrikeDoubleAndBeforeLast = new rules\IsStrikeDoubleAndBeforeLast();
+$result = new \result\Calculate($frames, $ruleStrike, $ruleSpare, $ruleLast, $ruleStrikeDouble, $ruleStrikeDoubleAndBeforeLast);
 
 
 $run = new Run($result);

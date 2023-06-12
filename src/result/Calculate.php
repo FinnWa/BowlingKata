@@ -9,6 +9,7 @@ use rules\IsAboveLast;
 use rules\IsSpare;
 use rules\IsStrike;
 use rules\IsStrikeDouble;
+use rules\IsStrikeDoubleAndBeforeLast;
 
 final class Calculate
 {
@@ -18,7 +19,8 @@ final class Calculate
         private readonly IsStrike $isStrike,
         private readonly IsSpare $isSpare,
         private readonly IsAboveLast $isLast,
-        private readonly IsStrikeDouble $isStrikeDouble
+        private readonly IsStrikeDouble $isStrikeDouble,
+        private readonly IsStrikeDoubleAndBeforeLast $isStrikeDoubleAndBeforeLast
     ) {
     }
 
@@ -26,7 +28,7 @@ final class Calculate
     {
         $result = 0;
         $frames = $this->createGame->create();
-
+        var_dump($frames);
         for ($i = 0; $i <= 9; $i++) {
 
             $result += $frames[$i]['first'] + $frames[$i]['second'];
@@ -37,7 +39,11 @@ final class Calculate
                 }
                 if ($this->isStrike->strike($frames[$i])) {
                     if ($this->isStrikeDouble->strike($frames[$i + 1])) {
-                        $result += $frames[$i + 1]['first'] + $frames[$i + 2]['first'];
+                        if($this->isStrikeDoubleAndBeforeLast->strike($i)){
+                            $result += $frames[$i + 1]['first'] + $frames[$i + 1]['second'];
+                        } else {
+                            $result += $frames[$i + 1]['first'] + $frames[$i + 2]['first'];
+                        }
                     } else {
                         $result += $frames[$i + 1]['first'] + $frames[$i + 1]['second'];
                     }

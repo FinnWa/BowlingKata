@@ -20,13 +20,18 @@ final class CreateGame
     {
         $scores = $this->getScores->scores();
         $frames = $this->createEmptyFrames->create();
-        $framesFilled = [];
 
         for ($i = 0; $i <= self::LAST_FRAME; $i++) {
             $singleFrame = $this->singleEmptyFrame->get($frames, $i);
+
             if ($singleFrame['first'] === null && current($scores) === '10') {
-                $singleFrame['first'] = current($scores);
-                $singleFrame['second'] = 0;
+                if(array_key_exists('third', $singleFrame)){
+                    $singleFrame['first'] = current($scores);
+                    $singleFrame['second'] = next($scores);
+                } else {
+                    $singleFrame['first'] = current($scores);
+                    $singleFrame['second'] = 0;
+                }
                 next($scores);
             }
 
